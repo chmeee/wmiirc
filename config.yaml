@@ -26,7 +26,8 @@ display:
   ##
   # The font to use in all text drawn by wmii.
   #
-  font: -*-fixed-medium-r-*-*-18-*-*-*-*-*-*-*
+  # font: -*-fixed-medium-r-*-*-18-*-*-*-*-*-*-*
+  font: -*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*
 
   ##
   # Thickness of client border (measured in pixels).
@@ -178,16 +179,16 @@ control:
     # focus
     #---------------------------------------------------------------------------
 
-    Mod1-Control-t: | # focus above client
+    Mod1-k: | # focus above client
       curr_view.select(:up) rescue nil
 
-    Mod1-Control-n: | # focus below client
+    Mod1-j: | # focus below client
       curr_view.select(:down) rescue nil
 
-    Mod1-Control-h: | # focus left client
+    Mod1--h: | # focus left client
       curr_view.select(:left) rescue nil
 
-    Mod1-Control-s: | # focus right client
+    Mod1-l: | # focus right client
       curr_view.select(:right) rescue nil
 
     Mod1-Control-space: | # focus floating area (toggle)
@@ -249,16 +250,16 @@ control:
     Mod1-Control-m,n: | # move grouping toward the bottom
       grouping.each {|c| c.send(:down) rescue nil }
 
-    Mod1-Control-m,h: | # move grouping toward the left
+    Mod1-Shift-h: | # move grouping toward the left
       grouping.each {|c| c.send(:left) rescue nil }
 
-    Mod1-Control-m,s: | # move grouping toward the right
+    Mod1-Shift-l: | # move grouping toward the right
       grouping.each {|c| c.send(:right) rescue nil }
 
     Mod1-Control-m,space: | # move grouping to floating area (toggle)
       grouping.each {|c| c.send(:toggle) rescue nil }
 
-    Mod1-Control-m,v: | # move grouping to chosen view
+    Mod1-Shift-t: | # move grouping to chosen view
       #
       # Changes the tag (according to a menu choice) of
       # each grouped client and returns the chosen tag.
@@ -279,7 +280,8 @@ control:
         end
       end
 
-    Mod1-Control-m,Delete: | # kill all clients in grouping
+#    Mod1-Control-m,Delete: | # kill all clients in grouping
+    Mod1-Shift-c: | # kill all clients in grouping
       grouping.each {|c| c.kill }
 
     # move grouping to the view whose index or name equals the pressed number
@@ -298,10 +300,10 @@ control:
     # swap
     #---------------------------------------------------------------------------
 
-    Mod1-Control-w,t: | # swap with above client
+    Mod1-Shift-k: | # swap with above client
       curr_client.swap(:up) rescue nil
 
-    Mod1-Control-w,n: | # swap with below client
+    Mod1-Shift-j: | # swap with below client
       curr_client.swap(:down) rescue nil
 
     Mod1-Control-w,h: | # swap with left client
@@ -416,7 +418,7 @@ control:
     # zoom
     #---------------------------------------------------------------------------
 
-    Mod1-Control-f: | # zoom client to fullscreen (toggle)
+    Mod1-f: | # zoom client to fullscreen (toggle)
       curr_client.fullscreen!
 
     Mod1-Control-b: | # copy grouping to temporary view
@@ -504,17 +506,17 @@ control:
     # menu
     #---------------------------------------------------------------------------
 
-    Mod1-Control-i: | # run internal action chosen from a menu
+    Mod1-a: | # run internal action chosen from a menu
       if choice = key_menu(actions, 'run action:')
         action choice
       end
 
-    Mod1-Control-e: | # run external program chosen from a menu
+    Mod1-p: | # run external program chosen from a menu
       if choice = key_menu(@programs, 'run program:')
         launch choice
       end
 
-    Mod1-Control-u: | # focus view chosen from a menu
+    Mod1-t: | # focus view chosen from a menu
       if choice = key_menu(tags, 'show view:')
         focus_view choice
       end
@@ -632,6 +634,15 @@ control:
     Mod1-Control-Shift-Return: | # mute volume (toggle)
       system 'amixer set Master toggle'
       status 'volume'
+
+    #---------------------------------------------------------------------------
+    # Keyboard
+    #---------------------------------------------------------------------------
+
+    Mod1-e:
+      system '/usr/bin/setxkbmap es'
+    Mod1-u:
+      system '/usr/bin/setxkbmap gb'
 
   ##
   # Event handlers.
